@@ -1,0 +1,15 @@
+extends: airbnb
+plugins:
+  - react
+  - jsx-a11y
+  - import
+rules:
+  eqeqeq:
+    - "warn"
+    - "allow-null"
+  prefer-const:
+    - "warn"
+  semi:
+    - "warn"
+  no-unused-vars:
+    - "warn"

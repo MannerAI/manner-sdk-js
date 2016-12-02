@@ -1,0 +1,1 @@
+{"version":3,"sources":["../src/manner.js"],"names":[],"mappings":";;AAAA,IAAM,CAAC,GAAG,CAAC,CAAC;;AAEZ,CAAC,UAAA,CAAC;SAAI,CAAC,GAAG,EAAE;EAAA,CAAE,CAAC,CAAC,CAAC;;AAEjB,OAAO,CAAC,GAAG,CAAC,KAAK,CAAC,CAAC","file":"index.js","sourcesContent":["const x = 5;\n\n(y => y + 11)(x);\n\nconsole.log('foo');\n"]}
