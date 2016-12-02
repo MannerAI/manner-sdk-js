@@ -1,11 +1,10 @@
 'use strict';
 
-var x = 5;
+var Lokka = require('lokka').Lokka;
+var Transport = require('lokka-transport-http').Transport;
 
-(function (y) {
-  return y + 11;
-})(x);
-
-console.log('foo');
+var client = new Lokka({
+  transport: new Transport('http://localhost:4444/graphql')
+});
 
 //# sourceMappingURL=index.js.map

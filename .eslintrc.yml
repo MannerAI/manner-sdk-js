@@ -13,3 +13,12 @@ rules:
     - "warn"
   no-unused-vars:
     - "warn"
+  comma-dangle:
+    - "off"
+  no-console:
+    - "off"
+  no-tabs:
+    - "off"
+  indent:
+    - "warn"
+    - "tab"

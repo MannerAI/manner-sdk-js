@@ -1,43 +1,42 @@
 {
-    "name": "manner-sdk-js",
-    "version": "1.0.0",
-    "repository": "git@github.com/MannerAI/manner-sdk-js",
-    "description": "Manner SDK for JavaScript",
-    "main": "manner.js",
-    "scripts": {
-
-        "eslint": "eslint src",
-        "babel": "babel src/manner.js --out-file build/index.js --source-maps",
-        "uglify": "uglifyjs --compress --mangle -- build/index.js > build/index.min.js",
-
-        "build:js": "npm run babel && npm run uglify",
-        "build": "npm run build:js",
-        "build:fast": "babel src/manner.js --out-file build/index.js --source-maps && uglifyjs --compress --mangle -- build/index.js > build/index.min.js",
-
-        "lint:js": "npm run eslint",
-        "lint": "npm run lint:js",
-
-        "test": "echo 'No tests defined'.",
-
-        "watch:js": "nodemon --watch src --watch test --exec 'npm run notify:build:js && npm run build:js &&  echo \"Restarted node server\" | notify -t \"Build System\" && node ./test/server.js'",
-        "watch": "npm run watch:js",
-
-        "notify:build:js": "echo \"Rebuilding JavaScript.\"",
-        "notify:run:js": "echo \"Restarted node server\" | notify -t \"Build System\"",
-
-        "dev": "npm install && npm run watch",
-        "prod": "npm install && npm run lint && npm run build && npm run test"
-    },
-    "author": "Christopher Little",
-    "license": "ISC",
-    "devDependencies": {
-        "babel": "^5.6.10",
-        "eslint": "^3.11.1",
-        "parallelshell": "^2.0.0",
-        "uglifyjs": "^2.4.10",
-        "eslint-config-airbnb": "^13.0.0",
-        "eslint-plugin-import": "^2.2.0",
-        "eslint-plugin-jsx-a11y": "^2.2.3",
-        "eslint-plugin-react": "^6.6.0"
-    }
+  "name": "manner-sdk-js",
+  "version": "1.0.0",
+  "repository": "git@github.com/MannerAI/manner-sdk-js",
+  "description": "Manner SDK for JavaScript",
+  "main": "manner.js",
+  "scripts": {
+    "eslint": "eslint src",
+    "babel": "babel src/manner.js --out-file build/index.js --source-maps",
+    "uglify": "uglifyjs --compress --mangle -- build/index.js > build/index.min.js",
+    "build:js": "npm run babel && npm run uglify",
+    "build": "npm run build:js",
+    "build:fast": "babel src/manner.js --out-file build/index.js --source-maps && uglifyjs --compress --mangle -- build/index.js > build/index.min.js",
+    "lint:js": "npm run eslint",
+    "lint": "npm run lint:js",
+    "test": "echo 'No tests defined'.",
+    "watch:js": "nodemon --watch src --watch test --exec 'npm run notify:build:js && npm run build:js &&  echo \"Restarted node server\" | notify -t \"Build System\" && node ./test/server.js'",
+    "watch": "npm run watch:js",
+    "notify:build:js": "echo \"Rebuilding JavaScript.\"",
+    "notify:run:js": "echo \"Restarted node server\" | notify -t \"Build System\"",
+    "dev": "npm install && npm run watch",
+    "prod": "npm install && npm run lint && npm run build && npm run test"
+  },
+  "author": "Christopher Little",
+  "license": "ISC",
+  "devDependencies": {
+    "babel": "^5.6.10",
+    "eslint": "^3.11.1",
+    "eslint-config-airbnb": "^13.0.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^2.2.3",
+    "eslint-plugin-react": "^6.6.0",
+    "parallelshell": "^2.0.0",
+    "uglifyjs": "^2.4.10"
+  },
+  "dependencies": {
+    "lokka": "^1.7.0",
+    "lokka-transport-http": "^1.6.1",
+    "inquirer": "^1.2.3",
+    "rx": "^4.1.0"
+  }
 }
