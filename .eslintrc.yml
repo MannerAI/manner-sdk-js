@@ -22,3 +22,21 @@ rules:
   indent:
     - "warn"
     - "tab"
+    - SwitchCase: 1
+  norestrictedsyntax:
+    - "off"
+  padded-blocks:
+    - "off"
+  spaced-commment:
+    - "off"
+  array-bracket-spacing:
+    - "warn"
+    - "always"
+  computed-property-spacing:
+    - "warn"
+    - "always"
+  space-in-parens:
+    - "warn"
+    - "always"
+  import/prefer-default-export:
+    - "off"

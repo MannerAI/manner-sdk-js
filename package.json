@@ -6,15 +6,12 @@
   "main": "manner.js",
   "scripts": {
     "eslint": "eslint src",
-    "babel": "babel src/manner.js --out-file build/index.js --source-maps",
-    "uglify": "uglifyjs --compress --mangle -- build/index.js > build/index.min.js",
-    "build:js": "npm run babel && npm run uglify",
+    "build:js": "babel --presets es2015 -d out src",
     "build": "npm run build:js",
-    "build:fast": "babel src/manner.js --out-file build/index.js --source-maps && uglifyjs --compress --mangle -- build/index.js > build/index.min.js",
     "lint:js": "npm run eslint",
     "lint": "npm run lint:js",
-    "test": "echo 'No tests defined'.",
-    "watch:js": "nodemon --watch src --watch test --exec 'npm run notify:build:js && npm run build:js &&  echo \"Restarted node server\" | notify -t \"Build System\" && node ./test/server.js'",
+    "test": "node test/server.js",
+    "watch:js": "nodemon --watch src --watch test --exec 'npm run notify:build:js && npm run build:js &&  echo \"Restarted node server\" | notify -t \"Build System\" && node ./test/pizza.js'",
     "watch": "npm run watch:js",
     "notify:build:js": "echo \"Rebuilding JavaScript.\"",
     "notify:run:js": "echo \"Restarted node server\" | notify -t \"Build System\"",
@@ -25,6 +22,8 @@
   "license": "ISC",
   "devDependencies": {
     "babel": "^5.6.10",
+    "babel-cli": "^6.18.0",
+    "babel-preset-es2015": "^6.18.0",
     "eslint": "^3.11.1",
     "eslint-config-airbnb": "^13.0.0",
     "eslint-plugin-import": "^2.2.0",
@@ -34,9 +33,10 @@
     "uglifyjs": "^2.4.10"
   },
   "dependencies": {
+    "chalk": "^1.1.3",
+    "inquirer": "^1.2.3",
     "lokka": "^1.7.0",
     "lokka-transport-http": "^1.6.1",
-    "inquirer": "^1.2.3",
     "rx": "^4.1.0"
   }
 }

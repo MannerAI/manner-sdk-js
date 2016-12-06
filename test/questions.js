@@ -78,9 +78,6 @@ module.exports = {
 		type: 'list',
 		name: 'prize',
 		message: 'For leaving a comment, you get a freebie',
-		choices: ['cake', 'fries'],
-		when(answers) {
-			return answers.comments !== 'Nope, all good!';
-		}
+		choices: ['cake', 'fries']
 	}
 };
