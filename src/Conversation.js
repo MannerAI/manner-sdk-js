@@ -115,26 +115,26 @@ export class Conversation {
 		return retVal;
 	}
 
-	getResponse( name, defaultResponse, entities ) {
-		console.log( chalk.bgWhite.black( 'Fetched a response!' ) );
-
-		let response;
-		if ( this[ conversationId ] !== '...' ) {
-			// TODO: fetch things from Manner
-		} else {
-			response = `${defaultResponse} :) `;
-		}
+	getResponse( action, defaultResponse, entities ) {
+		console.log( chalk.bgWhite.black( `Fetched a response for ${this[ agentId ]}!` ) );
 
 		// TODO: I think Manner will do its own entity injection
-		return Promise.resolve( entityReplace( response, entities ) );
+		const message = entityReplace( `${defaultResponse.message} :) `, entities );
+
+		return Promise.resolve( {
+			quickReplies: defaultResponse.quickReplies,
+			media: [],
+			message,
+			action
+		} );
 	}
 
 	log() {
-		console.log( chalk.bgWhite.black( `Event tracked to ${this[ conversationId ]}!` ) );
+		console.log( chalk.bgWhite.black( `Event tracked to ${this[ agentId ]}!` ) );
 	}
 
 	submitContext() {
-		console.log( chalk.bgWhite.black( `Received context information for ${this[ conversationId ]}!` ) );
+		console.log( chalk.bgWhite.black( `Received context information for ${this[ agentId ]}!` ) );
 	}
 
 }

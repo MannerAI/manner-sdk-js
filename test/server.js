@@ -10,7 +10,7 @@ const Promise = require( 'bluebird' );
 const questions = require( './questions.js' );
 
 Manner.setToken( 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiNDNlN2E0OTUtZWE3Mi00MjRlLThiM2UtYzdlYjgzMTQ0MTM0In0.lEMyiGzmjRNqX_0tm9gkpzpdHVPFsW3XN5gLeOipUO0' );
-Manner.setAgentID( '...' );
+Manner.setAgentID( 'PizzaBot' );
 
 const prompts = new Rx.Subject();
 const regularFlow = {
@@ -18,7 +18,7 @@ const regularFlow = {
 	0: 'toBeDelivered',
 	// after toBeDelivered, we now run a Manner test instead of specifying order
 	// toBeDelivered: 'size',
-	toBeDelivered: 'pizzaOrder',
+	toBeDelivered: 'size',
 	pizzaOrder: 'beverage',
 	beverage: 'comments',
 	comments: 'prize',
@@ -76,12 +76,37 @@ function getQuestion( action, conversation ) {
 
 	// always use Manner's suggestions
 	// (it will fall back to the default if necessary)
-	return conversation.getResponse( action, questions[ action ].message, [] )
-		.then( message =>
-			Object.assign( {}, questions[ action ], {
-				message
-			} )
-		);
+	const fallback = {
+		message: questions[ action ].message,
+		quickReplies: questions[ action ].choices
+	}
+	return conversation.getResponse( action, fallback, [] )
+		// convert Manner responses into inquirer questions
+		.then( ( { message, quickReplies } ) => {
+			let qr = quickReplies || [];
+			switch ( qr.length ) {
+				case 0:
+					return {
+						type: 'input',
+						name: action,
+						message
+					}
+				case 1:
+					return {
+						type: 'input',
+						name: action,
+						default: quickReplies[ 0 ],
+						message
+					}
+				default:
+					return {
+						type: 'list',
+						name: action,
+						choices: quickReplies,
+						message
+					}
+			}
+		} );
 }
 
 function main() {
@@ -100,6 +125,7 @@ function main() {
 			// TODO: morph lastAnswer into a a Manner "Event"
 			conversation.log( lastAnswer );
 
+			// NB could also attach context to a user (if we had users)
 			conversation.submitContext( {
 				name: lastAnswer.name,
 				value: lastAnswer.answer
@@ -112,7 +138,6 @@ function main() {
 					if ( question === null ) {
 						prompts.onCompleted();
 					} else {
-						console.log( 'Next!' );
 						prompts.onNext( question );
 					}
 				} );
@@ -127,16 +152,15 @@ function main() {
 	// attach a handler for when the conversation is over
 	p.then( ( allAnswers ) => {
 
-		// NB could also attach context to a user (if we had users)
-		conversation.submitContext( allAnswers );
 		orderGoal.resolve();
+		console.log( allAnswers );
 	} );
 
 	// finally start the conversation
 	console.log( 'Hi, welcome to Node Pizza' );
 	mannerModify( getAction( { name: 0 } ), conversation )
 		.then( action => getQuestion( action, conversation ) )
-		.then( question => console.log( 'Start' ) || prompts.onNext( question ) );
+		.then( question => prompts.onNext( question ) );
 }
 
 

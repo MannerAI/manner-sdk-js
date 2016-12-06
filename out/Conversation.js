@@ -126,28 +126,28 @@ var Conversation = exports.Conversation = function () {
 		}
 	}, {
 		key: 'getResponse',
-		value: function getResponse(name, defaultResponse, entities) {
-			console.log(chalk.bgWhite.black('Fetched a response!'));
-
-			var response = void 0;
-			if (this[conversationId] !== '...') {
-				// TODO: fetch things from Manner
-			} else {
-				response = defaultResponse + ' :) ';
-			}
+		value: function getResponse(action, defaultResponse, entities) {
+			console.log(chalk.bgWhite.black('Fetched a response for ' + this[agentId] + '!'));
 
 			// TODO: I think Manner will do its own entity injection
-			return Promise.resolve(entityReplace(response, entities));
+			var message = entityReplace(defaultResponse.message + ' :) ', entities);
+
+			return Promise.resolve({
+				quickReplies: defaultResponse.quickReplies,
+				media: [],
+				message: message,
+				action: action
+			});
 		}
 	}, {
 		key: 'log',
 		value: function log() {
-			console.log(chalk.bgWhite.black('Event tracked to ' + this[conversationId] + '!'));
+			console.log(chalk.bgWhite.black('Event tracked to ' + this[agentId] + '!'));
 		}
 	}, {
 		key: 'submitContext',
 		value: function submitContext() {
-			console.log(chalk.bgWhite.black('Received context information for ' + this[conversationId] + '!'));
+			console.log(chalk.bgWhite.black('Received context information for ' + this[agentId] + '!'));
 		}
 	}, {
 		key: 'isMidFlow',
